@@ -16,5 +16,62 @@ df = pd.read_csv('pixel_cafe_sales.csv')
 # busy = df[df["Quantity"] > 30] 
 # print(busy)
 
-both = df[(df["Quantity"] > 30) & (df["Category"] == "Food")]
-print(both)
+# only food items over 30
+# both = df[(df["Quantity"] > 30) & (df["Category"] == "Food")]
+# print(both)
+
+# 4. sort: display the the rows with the largest quantities
+# ranked = df.sort_values("Quantity", ascending=False)
+# print(ranked.head(3))
+
+# 4. sort: display the the rows with the smallest quantities
+# ranked = df.sort_values("Quantity", ascending=True)
+# print(ranked.head(3))
+
+# 5. calculate: add revenue = price * quantity
+# df["Revenue"] = df["Price"] * df["Quantity"]
+# print(df[["Product", "Price", "Quantity", "Revenue"]])
+
+# 6. summarise: display the total revenue in pounds
+# df["Revenue"] = df["Price"] * df["Quantity"]
+# total_revenue = df["Revenue"].sum()
+# print(f"Total revenue: £{total_revenue:.2f}")  
+
+# A. Display all Friday rows.
+# friday = df[df["Day"] == "Friday"]
+# print(friday)
+
+# B. Find friday's total revenue.
+# df["Revenue"] = df["Price"] * df["Quantity"] # calculated above
+# friday = df[df["Day"] == "Friday"]
+# friday_revenue = friday["Revenue"].sum()
+# print(f"Friday's total revenue: £{friday_revenue:.2f}")
+
+# C. Display the five rows with the highest revenue.
+# highest_revenue = df.sort_values("Revenue", ascending=False)
+# print(highest_revenue.head(5))
+
+# D. find total food revenue for the week
+# df["Revenue"] = df["Price"] * df["Quantity"] # calculated above
+# food = df[df["Category"] == "Food"]
+# food_revenue = food["Revenue"].sum()
+# print(f"weekly food revenue: £{food_revenue:.2f}")
+
+# E. Write a recommendation using two figures.
+# Students should write their own recommendation.
+
+df["Revenue"] = df["Price"] * df["Quantity"]
+friday = df[df["Day"] == "Friday"]
+food = df[df["Category"] == "Food"]
+food_revenue = food["Revenue"].sum()
+friday_revenue = friday["Revenue"].sum()
+print(f"I recommend checking food stock before Friday. "
+f"Friday generated £{friday_revenue:.2f} across all categories, "
+f"and Food generated £{food_revenue:.2f} over the week. "
+f"We should check Friday's food sales before deciding "
+f"how much extra stock to order." )
+
+# Optional: group by Product to compare weekly revenue totals.
+weekly_revenue = df.groupby("Product")["Revenue"].sum()
+print(weekly_revenue.sort_values(ascending=False).round(2))
+
